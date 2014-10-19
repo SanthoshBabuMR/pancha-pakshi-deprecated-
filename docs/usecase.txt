@@ -1,0 +1,14 @@
+Business Usecases
+-----------------
+#01
+Scenario:
+User simply wants to check the pakshi sastram for the current time in the day
+
+Steps:
+
+#02
+Scenario:
+User needs to meet his higher official ( or ) another person to get his job down, which would generally be disapproved by the higher official ( or ) another person
+
+Steps:
+User will look

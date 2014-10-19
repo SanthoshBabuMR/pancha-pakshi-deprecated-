@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Index</title>
+    <!-- css begin -->
+    <link rel="stylesheet" href="/public/css/normalize.css" />
+    <link rel="stylesheet" href="/public/css/render.css" />
+    <!-- css end -->
+  </head>
+  <body>
+
+    <div class="doc-wrap">
+    <!-- doc-wrap begin -->
+
+      <div class="calender-picker-wrapper">
+      <!-- calender-picker-wrapper begin -->
+        <div class="calender-picker hide">
+        <!-- calender-picker begin -->
+          <div class="summary-panel">
+          <!-- summary-panel begin -->
+            <div class="grid-c">
+            <!-- grid-c begin -->
+              <div class="row">
+              <!-- row begin -->
+                <div class="block-b">
+                  <span data-bind="text:date().format('MMMM'), click: selectedMonth"></span>
+                </div>
+                <div class="block-a">
+                  <span data-bind="text:date().format('DD') + ' ( '+ date().format('ddd')+ ' )', click: selectedDate"></span>
+                </div>
+                <div class="block-c">
+                  <span data-bind="text:date().format('YYYY'), click: selectedYear"></span>
+                </div>
+                <div class="block-d">
+                  <!-- <button data-bind="click: updateToToday, css: { 'in-active': today().format('DD-MMMM-YYYY') === date().format('DD-MMMM-YYYY') }, enable: today().format('DD-MMMM-YYYY') !== date().format('DD-MMMM-YYYY')" class="button">Today</button> -->
+                  <button class="button" data-bind="click:closeView, css: calenderShowView">Close</button>
+                </div>
+              <!-- row end -->
+              </div>
+            <!-- grid-c end -->
+            </div>
+          <!-- summary-panel end -->
+          </div>
+          <div class="configuration-panel" data-bind="css: calenderShowView">
+          <!-- configuration-panel begin -->
+            <div class="date-panel">
+            <!-- date-panel begin -->
+              <div class="grid-f">
+              <!-- grid-f begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: dayView -->
+                  <div class="block-z">
+                    <span data-bind="text:$data" class="day-title"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+                <!-- ko foreach: dateView -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: $data -->
+                  <div class="block-z">
+                    <span data-bind="text: $data, click: $root.updateDate, css: { 'selected': $data == $root.date().format('DD') }" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+                <!-- /ko -->
+              <!-- grid-f end -->
+              </div>
+            <!-- date-panel end -->
+            </div>
+            <div class="month-panel">
+            <!-- month-panel begin -->
+              <div class="grid-b">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: monthView -->
+                  <div class="block-z">
+                    <span data-bind="text:$data, click: $root.updateMonth, css: { 'selected': $data == $root.date().format('MMMM') }" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- month-panel end -->
+            </div>
+            <div class="year-panel">
+            <!-- year-panel begin -->
+              <div class="grid-d">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <div class="block-z">
+                    <button class="button flat" data-bind="click: yearGroup('p')">Prev</button>
+                  </div>
+                  <!-- ko foreach: yearView -->
+                  <div class="block-z">
+                    <span data-bind="text:$data, click: $root.updateYear, css: { 'selected': $data == $root.date().format('YYYY') }" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                  <div class="block-z">
+                    <button class="button flat" data-bind="click: yearGroup('n')">Next</button>
+                  </div>
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- year-panel end -->
+            </div>
+          <!-- configuration-panel end -->
+          </div>
+        <!-- calender-picker end -->
+        </div>
+      <!-- calender-picker-wrapper end -->
+      </div>
+
+      <div class="time-picker-wrapper">
+      <!-- time-picker-wrapper begin -->
+        <div class="time-picker hide">
+        <!-- time-picker begin -->
+          <div class="summary-panel">
+          <!-- summary-panel begin -->
+            <div class="grid-c">
+            <!-- grid-c begin -->
+              <div class="row">
+              <!-- row begin -->
+                <div class="block-a">
+                  <span data-bind="text:selectedTime().format('hh'), click: showHoursMenu" tabindex="0"></span>
+                </div>
+                <div class="block-b">
+                  <span data-bind="text:selectedTime().format('mm'), click: showMinutesMenu" tabindex="0"></span>
+                </div>
+                <div class="block-c">
+                  <span data-bind="text:selectedTime().format('a'), click: showMeridianMenu" tabindex="0"></span>
+                </div>
+                <div class="block-d">
+                  <!-- <button data-bind="click: updateToCurrentTime, css: { 'in-active': currentTime().format('hh:mm a') === selectedTime().format('hh:mm a') }, enable:currentTime().format('hh:mm a') !== selectedTime().format('hh:mm a')" class="button">Now</button> -->
+                  <button class="button" data-bind="click:closeView,css: timePickerShowView">Close</button>
+                </div>
+                <!-- row end -->
+              </div>
+            <!-- grid-c end -->
+            </div>
+          <!-- summary-panel end -->
+          </div>
+          <div class="configure-panel" data-bind="css: timePickerShowView">
+          <!-- configure-panel begin -->
+            <div class="toggle-panel">
+            <!-- toggle-panel begin -->
+              <div class="grid-c">
+              <!-- grid-c begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <div class="block-a">
+                    <span data-bind="click: showHoursMenu" tabindex="0" class="toggle-hours">hours</span>
+                  </div>
+                  <div class="block-b">
+                    <span data-bind="click: showMinutesMenu" tabindex="0" class="toggle-minutes">minutes</span>
+                  </div>
+                  <div class="block-c">
+                    <span data-bind="click: showMeridianMenu" tabindex="0" class="toggle-meridian">am / pm</span>
+                  </div>
+                  <div class="block-d">
+                    <!-- <div class="button close" data-bind="click:closeView" tabindex="0">Close</div> -->
+                  </div>
+                <!-- row end -->
+                </div>
+              <!-- grid-c end -->
+              </div>
+            <!-- toggle-panel end -->
+            </div>
+            <div class="hours-panel">
+            <!-- hours-panel begin -->
+              <div class="grid-b">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                <!-- ko foreach: hoursList -->
+                  <div class="block-z">
+                    <span data-bind="text: $data + ' ' + $parent.selectedTime().format('a'), click: function(){ $parent.setHour($data); },
+                    css: { 'selected': $data == $parent.selectedTime().format('hh') }" tabindex="0" class="entity"></span>
+                  </div>
+                <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- hours-panel end -->
+            </div>
+            <div class="minutes-panel">
+            <!-- minutes-panel begin -->
+              <!-- ko if: typeof minutesList[0] === "object" -->
+              <div class="grid-c">
+              <!-- grid-c begin -->
+                <div class="row minutes-group">
+                <!-- row begin -->
+                  <!-- ko foreach: minutesList -->
+                  <div class="block-z">
+                    <span data-bind="text:$data[0] + ' hr' + $root.selectedTime().format('hh') + ':' +$data[$data.length-1] , click: function(){ $parent.expandMinutes($index) }" tabindex="0" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+                <!-- ko foreach: minutesList -->
+                <div class="row hide">
+                  <div class="block">
+                    <span data-bind="click: $parent.shrinkMinutes" class="button back">back</span>
+                  </div>
+                <!-- ko foreach: $data -->
+                  <div class="block-z">
+                    <span data-bind="text:$root.selectedTime().format('hh') + ':' + $data, click: function(){ $root.setMinute($data); },
+                    css: { 'selected': $data == $root.selectedTime().format('mm') }" tabindex="0" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                </div>
+                <!-- /ko -->
+              <!-- grid-c end -->
+              </div>
+              <!-- /ko -->
+
+              <!-- ko ifnot: typeof minutesList[0] === "object" -->
+              <div class="grid-c">
+              <!-- grid-c begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: minutesList -->
+                  <div class="block-z">
+                    <span data-bind="text: $data + ' min', click: function(){ $root.setMinute($data); },
+                    css: { 'selected': $data == $root.selectedTime().format('mm') }" tabindex="0" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-c end -->
+              </div>
+              <!-- /ko -->
+
+            <!-- minutes-panel end -->
+            </div>
+            <div class="meridian-panel">
+            <!-- meridian-panel begin -->
+              <div class="grid-a">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                <!-- ko foreach: meridianList -->
+                  <div class="block-z">
+                    <span data-bind="text:$data, click: function(){ $parent.setMeridian($data); }, css: { 'selected': $data == $parent.selectedTime().format('a')  }" class="entity"></span>
+                  </div>
+                <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- meridian-panel end -->
+            </div>
+          <!-- configure-panel end -->
+          </div>
+        <!-- time-picker end -->
+        </div>
+      <!-- time-picker-wrapper end -->
+      </div>
+
+
+      
+      <div class="calender-picker-wrapper">
+      <!-- calender-picker-wrapper begin -->
+        <div class="calender-picker hide">
+        <!-- calender-picker begin -->
+          <div class="summary-panel">
+          <!-- summary-panel begin -->
+            <div class="grid-c">
+            <!-- grid-c begin -->
+              <div class="row">
+              <!-- row begin -->
+                <div class="block-b">
+                  <span data-bind="text:date().format('MMMM'), click: selectedMonth"></span>
+                </div>
+                <div class="block-a">
+                  <span data-bind="text:date().format('DD') + ' ( '+ date().format('ddd')+ ' )', click: selectedDate"></span>
+                </div>
+                <div class="block-c">
+                  <span data-bind="text:date().format('YYYY'), click: selectedYear"></span>
+                </div>
+                <div class="block-d">
+                  <!-- <button data-bind="click: updateToToday, css: { 'in-active': today().format('DD-MMMM-YYYY') === date().format('DD-MMMM-YYYY') }, enable: today().format('DD-MMMM-YYYY') !== date().format('DD-MMMM-YYYY')" class="button">Today</button> -->
+                  <button class="button" data-bind="click:closeView, css: calenderShowView">Close</button>
+                </div>
+              <!-- row end -->
+              </div>
+            <!-- grid-c end -->
+            </div>
+          <!-- summary-panel end -->
+          </div>
+          <div class="configuration-panel" data-bind="css: calenderShowView">
+          <!-- configuration-panel begin -->
+            <div class="date-panel">
+            <!-- date-panel begin -->
+              <div class="grid-f">
+              <!-- grid-f begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: dayView -->
+                  <div class="block-z">
+                    <span data-bind="text:$data" class="day-title"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+                <!-- ko foreach: dateView -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: $data -->
+                  <div class="block-z">
+                    <span data-bind="text: $data, click: $root.updateDate, css: { 'selected': $data == $root.date().format('DD') }" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+                <!-- /ko -->
+              <!-- grid-f end -->
+              </div>
+            <!-- date-panel end -->
+            </div>
+            <div class="month-panel">
+            <!-- month-panel begin -->
+              <div class="grid-b">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: monthView -->
+                  <div class="block-z">
+                    <span data-bind="text:$data, click: $root.updateMonth, css: { 'selected': $data == $root.date().format('MMMM') }" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- month-panel end -->
+            </div>
+            <div class="year-panel">
+            <!-- year-panel begin -->
+              <div class="grid-d">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <div class="block-z">
+                    <button class="button flat" data-bind="click: yearGroup('p')">Prev</button>
+                  </div>
+                  <!-- ko foreach: yearView -->
+                  <div class="block-z">
+                    <span data-bind="text:$data, click: $root.updateYear, css: { 'selected': $data == $root.date().format('YYYY') }" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                  <div class="block-z">
+                    <button class="button flat" data-bind="click: yearGroup('n')">Next</button>
+                  </div>
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- year-panel end -->
+            </div>
+          <!-- configuration-panel end -->
+          </div>
+        <!-- calender-picker end -->
+        </div>
+      <!-- calender-picker-wrapper end -->
+      </div>
+
+      <div class="time-picker-wrapper">
+      <!-- time-picker-wrapper begin -->
+        <div class="time-picker hide">
+        <!-- time-picker begin -->
+          <div class="summary-panel">
+          <!-- summary-panel begin -->
+            <div class="grid-c">
+            <!-- grid-c begin -->
+              <div class="row">
+              <!-- row begin -->
+                <div class="block-a">
+                  <span data-bind="text:selectedTime().format('hh'), click: showHoursMenu" tabindex="0"></span>
+                </div>
+                <div class="block-b">
+                  <span data-bind="text:selectedTime().format('mm'), click: showMinutesMenu" tabindex="0"></span>
+                </div>
+                <div class="block-c">
+                  <span data-bind="text:selectedTime().format('a'), click: showMeridianMenu" tabindex="0"></span>
+                </div>
+                <div class="block-d">
+                  <!-- <button data-bind="click: updateToCurrentTime, css: { 'in-active': currentTime().format('hh:mm a') === selectedTime().format('hh:mm a') }, enable:currentTime().format('hh:mm a') !== selectedTime().format('hh:mm a')" class="button">Now</button> -->
+                  <button class="button" data-bind="click:closeView,css: timePickerShowView">Close</button>
+                </div>
+                <!-- row end -->
+              </div>
+            <!-- grid-c end -->
+            </div>
+          <!-- summary-panel end -->
+          </div>
+          <div class="configure-panel" data-bind="css: timePickerShowView">
+          <!-- configure-panel begin -->
+            <div class="toggle-panel">
+            <!-- toggle-panel begin -->
+              <div class="grid-c">
+              <!-- grid-c begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <div class="block-a">
+                    <span data-bind="click: showHoursMenu" tabindex="0" class="toggle-hours">hours</span>
+                  </div>
+                  <div class="block-b">
+                    <span data-bind="click: showMinutesMenu" tabindex="0" class="toggle-minutes">minutes</span>
+                  </div>
+                  <div class="block-c">
+                    <span data-bind="click: showMeridianMenu" tabindex="0" class="toggle-meridian">am / pm</span>
+                  </div>
+                  <div class="block-d">
+                    <!-- <div class="button close" data-bind="click:closeView" tabindex="0">Close</div> -->
+                  </div>
+                <!-- row end -->
+                </div>
+              <!-- grid-c end -->
+              </div>
+            <!-- toggle-panel end -->
+            </div>
+            <div class="hours-panel">
+            <!-- hours-panel begin -->
+              <div class="grid-b">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                <!-- ko foreach: hoursList -->
+                  <div class="block-z">
+                    <span data-bind="text: $data + ' hr ' , click: function(){ $parent.setHour($data); },
+                    css: { 'selected': $data == $parent.selectedTime().format('hh') }" tabindex="0" class="entity"></span>
+                  </div>
+                <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- hours-panel end -->
+            </div>
+            <div class="minutes-panel">
+            <!-- minutes-panel begin -->
+              <!-- ko if: typeof minutesList[0] === "object" -->
+              <div class="grid-c">
+              <!-- grid-c begin -->
+                <div class="row minutes-group">
+                <!-- row begin -->
+                  <!-- ko foreach: minutesList -->
+                  <div class="block-z">
+                    <span data-bind="text:$root.selectedTime().format('hh') + ':' +$data[0] + ' ... ' + $root.selectedTime().format('hh') + ':' +$data[$data.length-1] , click: function(){ $parent.expandMinutes($index) }" tabindex="0" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+                <!-- ko foreach: minutesList -->
+                <div class="row hide">
+                  <div class="block">
+                    <span data-bind="click: $parent.shrinkMinutes" class="button back">back</span>
+                  </div>
+                <!-- ko foreach: $data -->
+                  <div class="block-z">
+                    <span data-bind="text:$root.selectedTime().format('hh') + ':' + $data, click: function(){ $root.setMinute($data); },
+                    css: { 'selected': $data == $root.selectedTime().format('mm') }" tabindex="0" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                </div>
+                <!-- /ko -->
+              <!-- grid-c end -->
+              </div>
+              <!-- /ko -->
+
+              <!-- ko ifnot: typeof minutesList[0] === "object" -->
+              <div class="grid-c">
+              <!-- grid-c begin -->
+                <div class="row">
+                <!-- row begin -->
+                  <!-- ko foreach: minutesList -->
+                  <div class="block-z">
+                    <span data-bind="text:$data + ' min', click: function(){ $root.setMinute($data); },
+                    css: { 'selected': $data == $root.selectedTime().format('mm') }" tabindex="0" class="entity"></span>
+                  </div>
+                  <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-c end -->
+              </div>
+              <!-- /ko -->
+
+            <!-- minutes-panel end -->
+            </div>
+            <div class="meridian-panel">
+            <!-- meridian-panel begin -->
+              <div class="grid-a">
+              <!-- grid-b begin -->
+                <div class="row">
+                <!-- row begin -->
+                <!-- ko foreach: meridianList -->
+                  <div class="block-z">
+                    <span data-bind="text: $data, click: function(){ $parent.setMeridian($data); }, css: { 'selected': $data == $parent.selectedTime().format('a')  }" class="entity"></span>
+                  </div>
+                <!-- /ko -->
+                <!-- row end -->
+                </div>
+              <!-- grid-b end -->
+              </div>
+            <!-- meridian-panel end -->
+            </div>
+          <!-- configure-panel end -->
+          </div>
+        <!-- time-picker end -->
+        </div>
+      <!-- time-picker-wrapper end -->
+      </div>
+
+
+      <section class="view view1">
+      <!-- view begin -->
+        <div data-bind="text:title"></div>
+        <ul data-bind="foreach: list">
+          <li>
+            <div data-bind="text: mainActivity"></div>
+            <ol data-bind="foreach: subActivity"  style="list-style:none">
+              <li data-bind="text:$data">
+              </li>
+            </ol>
+          </li>
+        </ul>
+      <!-- view end -->
+      </section>
+
+    <!-- doc-wrap end -->
+    </div>
+
+    <!-- script begin -->
+    <script data-main="/public/script/config/requireJSConfig.js" src="/public/script/vendor/require.js"></script>
+    <!-- script end -->
+  </body>
+</html>

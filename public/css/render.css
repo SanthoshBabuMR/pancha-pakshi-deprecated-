@@ -1,0 +1,429 @@
+*,
+*:after,
+*:before {
+	line-height: 1.5;
+	box-sizing: border-box;
+}
+/* typography begin */
+body {
+	font-family: arial;
+}
+body,
+div,
+span,
+p,
+a,
+li {
+	font-size: 13px;
+}
+a {
+	color: rgb(0, 0, 238);
+}
+/* typography end */
+
+/* headers begin */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+};
+/* headers begin */
+
+/* grids begin */
+[class*="grid-"] {
+	width: 100%;
+	margin-bottom: 10px;
+}
+[class*="grid-"] .row {
+	padding: 0 0 6px 0;
+}
+[class*="grid-"] .row:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+[class*="grid-"] [class*="block-"] {
+	float: left;
+	padding: 3px 5px;
+}
+[class*="grid-"] .block {
+	float: left;
+	width: 100%;
+	padding: 3px 5px;
+}
+.grid-a [class*="block-"],
+[class*="grid-"] .grid-a [class*="block-"] {
+	width: 50%;
+}
+.grid-b [class*="block-"],
+[class*="grid-"] .grid-b [class*="block-"] {
+	width: 33%;
+}
+.grid-c [class*="block-"],
+[class*="grid-"] .grid-c [class*="block-"] {
+	width: 25%;
+}
+.grid-d [class*="block-"],
+[class*="grid-"] .grid-d [class*="block-"] {
+	width: 20%;
+}
+.grid-f {
+  padding-left: 1%;
+  padding-right: 1%;
+}
+.grid-f [class*="block-"] {
+  width: 14%;
+}
+/* grids end */
+
+/* clear float begin */
+.clrAft:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+/* clear float end */
+
+.hide {
+	display: none;
+}
+
+.doc-wrap {
+	padding: 5px;
+  max-width: 480px;
+  margin: 0 auto;
+  border-left: 1px solid #eeeeee;
+  border-right: 1px solid #eeeeee;
+}
+/**
+ * view1 begin
+ */
+header {
+  border-bottom: 5px solid #dddddd;
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+header h1,
+header h2 {
+  text-align: center;
+}
+header h1 span {
+  font-size: 1em;
+}
+header h1 span:first-child {
+  text-transform: capitalize;
+}
+header h2 {
+  font-size: 12px;
+  font-weight: 400;
+}
+.activity-grid .row {
+  border-bottom: 1px solid #dddddd;
+}
+.activity-grid .block-a {
+  text-align: right;
+  width: 50%;
+}
+.activity-grid .block-b {
+  width: 20%;
+  text-transform: capitalize;
+}
+.activity-grid .block-c{
+  width: 30%;
+  line-height: 45px;
+  height: 45px;
+}
+.activity-grid .block-a,
+.activity-grid .block-b {
+  line-height: 45px;
+  height: 45px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.activity-grid h3 {
+  line-height: 45px;
+  margin: 0;
+}
+.activity-grid .row:nth-child(1) h3 {
+  font-size: 24px;
+}
+.activity-grid .row:nth-child(2) h3 {
+  font-size: 20px;
+}
+.activity-grid .row:nth-child(3) h3 {
+  font-size: 18px;
+}
+.activity-grid .row:nth-child(4) h3 {
+  font-size: 16px;
+}
+.activity-grid .row:nth-child(5) h3 {
+  font-size: 14px;
+}
+/**
+ * view1 end
+ */
+.abc.abcd .block-a {
+  width: 30%;
+}
+.abc.abcd .block-b {
+  width: 30%;
+}
+.abc.abcd .block-c {
+  width: 40%;
+}
+/**
+ * begin: outline
+ */
+*:focus {
+  outline: none;
+  box-shadow: 0 0 3px 0px #2451E2 !important;
+  border-radius: 3px;
+}
+
+/**
+ * begin: outline
+ */
+
+
+/**
+ * begin: button
+ */
+.button {
+  display: inline-block;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #f0f0f0;
+  color: #000000;
+  box-shadow: 1px 1px 1px 0 #999999;
+  cursor: pointer;
+  font-weight: 900;
+}
+.button.flat {
+  padding: 2px 6px;
+  border-radius: 1px;
+}
+.button.in-active {
+  color: #cccccc;
+}
+/**
+ * end: button
+ */
+
+/**
+ * begin: time-picker
+ */
+.time-picker-wrapper {
+  max-width: 420px;
+}
+.time-picker.hide {
+  display: none;
+}
+.time-picker .summary-panel,
+.time-picker .toggle-panel,
+.time-picker .hours-panel,
+.time-picker .minutes-panel,
+.time-picker .meridian-panel,
+.time-picker .close-panel {
+  max-width: 420px;
+}
+.time-picker .summary-panel .block-a span,
+.time-picker .summary-panel .block-b span {
+  /* outline: none */
+}
+.time-picker .summary-panel .block-a span:after,
+.time-picker .summary-panel .block-b span:after {
+  content: ":";
+  float: right;
+  margin: 0 -9px 0 0;
+}
+.time-picker .summary-panel .block-a span,
+.time-picker .summary-panel .block-b span,
+.time-picker .summary-panel .block-c span {
+  display: block;
+  text-align: center;
+  border-bottom: 1px solid #eeeeee;
+  padding: 7px 0;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.time-picker .summary-panel .row {
+  padding: 0;
+}
+.time-picker .summary-panel .block-d span {
+  border-bottom: none;
+  float: right;
+  margin: 0 5px 0 0;
+}
+.time-picker .configuration-panel {
+  border-bottom: 1px solid #999999;
+}
+.time-picker .configuration-panel.hide {
+  display: none;
+}
+.time-picker .toggle-panel [class*="block-"] {
+  text-align: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.time-picker .toggle-panel .toggle-hours,
+.time-picker .toggle-panel .toggle-minutes,
+.time-picker .toggle-panel .toggle-meridian {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #dddddd;
+  padding: 3px;
+  cursor: pointer;
+}
+.time-picker .show-hours-panel .toggle-hours,
+.time-picker .show-minutes-panel .toggle-minutes,
+.time-picker .show-meridian-panel .toggle-meridian {
+  color: #333333;
+}
+.time-picker .hours-panel,
+.time-picker .minutes-panel,
+.time-picker .meridian-panel {
+  display: none;
+}
+.time-picker .show-hours-panel .hours-panel,
+.time-picker .show-minutes-panel .minutes-panel,
+.time-picker .show-meridian-panel .meridian-panel {
+  display: block;
+}
+.time-picker .hours-panel .block-z,
+.time-picker .minutes-panel .block-z,
+.time-picker .meridian-panel .block-z {
+  width: 25%;
+}
+.time-picker .menu .minutes-panel .back {
+  margin: 0 0 0 6px;
+}
+.time-picker .menu .minutes-group .block-z {
+  width: 40%;
+}
+.time-picker .entity {
+  display: block;
+  border: 1px solid #ffffff;
+  color: #111111;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.time-picker .entity.selected {
+  border: 1px solid #999999;
+  border-radius: 5px;
+  font-weight: 900;
+  text-decoration: underline;
+}
+.time-picker .close-panel .block-z {
+  float: none;
+  width: 100%;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  padding: 5px 0 7px 0;
+}
+.time-picker-wrapper .button.hide {
+  display: none;
+}
+/**
+ * begin: end-picker
+ */
+
+/**
+ * begin: calender-picker
+ */
+.calender-picker-wrapper {
+  max-width: 420px;
+}
+.calender-picker.hide {
+  display: none;
+}
+.calender-picker .summary-panel,
+.calender-picker .date-panel,
+.calender-picker .month-panel,
+.calender-picker .year-panel,
+.calender-picker .close-panel {
+  max-width: 420px;
+}
+.calender-picker .summary-panel span {
+  display: block;
+  text-align: center;
+  border-bottom: 1px solid #eeeeee;
+  padding: 7px 0;
+  cursor: pointer;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.calender-picker .summary-panel .row {
+  padding: 0;
+}
+.calender-picker .configuration-panel {
+  border-bottom: 1px solid #999999;
+}
+.calender-picker .date-panel,
+.calender-picker .month-panel,
+.calender-picker .year-panel {
+  display: none;
+}
+.calender-picker .show-date-panel .date-panel,
+.calender-picker .show-month-panel .month-panel,
+.calender-picker .show-year-panel .year-panel {
+  display: block;
+}
+.calender-picker .date-panel .day-title {
+  text-align: center;
+  display: block;
+  padding: 5px;
+}
+.calender-picker .entity {
+  display: block;
+  border: 1px solid #ffffff;
+  color: #111111;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.calender-picker .month-panel .entity {
+  text-align: left;
+}
+.calender-picker .year-panel .entity {
+  text-align: left;
+  display: inline-block;
+}
+.calender-picker .year-panel .button {
+  margin: 5px 0 0 0;
+}
+.calender-picker .entity.selected {
+  border: 1px solid #999999;
+  border-radius: 5px;
+  font-weight: 900;
+  text-decoration: underline;
+}
+.calender-picker .close-panel .block-z {
+  float: none;
+  width: 100%;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  padding: 5px 0 7px 0;
+}
+.calender-picker-wrapper .button.hide {
+  display: none;
+}
+/**
+ * begin: calender-picker
+ */

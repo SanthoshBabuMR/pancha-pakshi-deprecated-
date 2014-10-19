@@ -1,0 +1,391 @@
+/*
+V.1.0
+-----
+Not in this release
+- dynamically getting sunrise/sunset
+- dynamically determining paksham
+
+What's included for this release
+- sunrise to be defaulted to 06:00 and sunset to 06:00pm
+- user must choose the date, set paksham, choose his bird
+- system must display fav time in the day
+eg: 00:00:00 - 02:23:59
+    02:24:00 - 04:47:59
+
+- enable user to change bird,
+
+UI
+--
+
+[bird] --- [day] [month] [year] -- [paksham]
+Update
+00:00:00 - 02:23:59 - FAV
+02:24:00 - 04:47:59 - NOT FAV
+04:48:00 - 07:11:59 - NOT FAV
+
+
+ instance of time, paksham, pakshi, its activity, sub-activity, active/inactive
+   step 1: get the instance of time eg: 11:30:15 or 14:05:15
+   step 2: get the day ( from date )
+   step 3: get paksham
+   step 4: get sunrise
+   step 5: convert the current instance of time to paksha pakshi timeline
+
+  Timeline - Seconds - pakshi timeline - Seconds
+  00:00:00 - 0       - 23:59:59        - 86399 ( prev day)
+  06:00:00 - 21600   - 00:00:00        - 0     ( today )
+  12:00:00 - 43200   - 06:00:00        - 21600 ( today )
+  18:00:00 - 64800   - 12:00:00        - 43200 ( today )
+  23:59:59 - 86399   - 18:00:00        - 64800 ( today )
+
+*/
+
+/**
+ * @function getDurationInSeconds
+ * @description return current duration in seconds / minutes / hours;
+ * @param {object} t object holding hours, minutes, seconds
+ *                 can be moment object or custom object holding the properties below
+ * @property {number} h hours
+ * @property {number} m minutes
+ * @property {number} s seconds
+ * @param {string} type specifies if the type in which the duration should be returned
+ * @return {number}
+ */
+
+function getDuration( momentObject, type ) {
+  var as = "asSeconds";
+  if( type !== undefined ) {
+    as = type
+  }
+  return moment.duration( momentObject )[as]();
+}
+
+function formatDuration( durationInSeconds, formatAs, momentObject ) {
+  var m = momentObject === undefined ? moment() : momentObject;
+      d = {
+        s: durationInSeconds || 0
+      };
+  return m.set('hour', getDuration( d, "hours" ) )
+          .set('minute', getDuration( d, "minutes" ) )
+          .set('second', getDuration( d, "seconds" ) )
+          .format( formatAs || "HH:mm:ss" );
+}
+function getPaksham( momentObject ) {
+  return "shuklaPaksham";
+}
+function getSunrise( momentObject ) {
+  var sunrise = "06:00:00".split(":"); //sunrise[ momentObject.format("DD:MM:YYYY") ].split(":")
+  return moment( momentObject ).set( 'hour',sunrise [0] ).set( 'minute',sunrise [1] ).set( 'second',sunrise [2] )
+}
+/**
+ * sastram object will have 00:00:00 set to sunrise, 12:00:00 to sunset
+ */
+function convertToSastramTime( momentObject ) {
+  var m = momentObject === undefined ? moment() : momentObject;
+  var sunrise = getSunrise( m ),
+      dayBefore,
+      dayBeforeSunrise,
+      timeGap;
+
+  if( moment( m ) .isBefore( sunrise ) ) {
+    dayBefore = moment( m ).subtract( 1, 'day' );
+    dayBeforeSunrise = getSunrise( dayBefore );
+    timeGap = moment( dayBefore ).subtract( dayBeforeSunrise );
+    m = dayBefore.set('hour', timeGap.hours() )
+                 .set('minute', timeGap.minutes() )
+                 .set('second', timeGap.seconds() );
+  }
+  else {
+    timeGap = moment( m ).subtract( sunrise );
+    m = m.set('hour', timeGap.hours() )
+         .set('minute', timeGap.minutes() )
+         .set('second', timeGap.seconds() );
+  }
+  return m;
+}
+function DurationPassedByInDay( momentObjectAsPerSastram ) {
+  return getDuration( momentObjectAsPerSastram );
+}
+function DurationPassedByInJamam( momentObjectAsPerSastram ) {
+  return DurationPassedByInDay( momentObjectAsPerSastram ) % 8640
+}
+function getDayOrNight( momentObjectAsPerSastram ) {
+  return DurationPassedByInDay( momentObjectAsPerSastram ) > 43199 ? "night" : "day";
+}
+function getJamam( momentObjectAsPerSastram ) {
+  return window.parseInt( DurationPassedByInDay( momentObjectAsPerSastram ) / 8640 );
+}
+function moveToFirst( arr, val ) {
+  if ( _.isArray(arr) === true ) {
+    var newArr = [];
+    var len = arr.length;
+    var index = _.indexOf(arr, val);
+    //console.log( "index : " + index);
+    //console.log( val );
+    for (var i = 0, j = index; i < len; i++, j++) {
+      j = j >= len ? 0 : j;
+      newArr[i] = arr[j];
+    }
+    return newArr;
+  } else {
+    throw Error("first argument must be array");
+  }
+};
+function getSastram( momentObject ) {
+  // get momentobject() or default to current time
+  var m = momentObject === undefined ? moment() : momentObject;
+  var cycle = ss.cycle,
+      jamamDuration = 8640,
+      // convert momentobject as sastram object
+      momentObjectAsPerSastram = convertToSastramTime( moment( m ) ),
+      // get paksham
+      paksham = getPaksham( momentObjectAsPerSastram ),
+      // get day or night
+      dayOrNight = getDayOrNight( momentObjectAsPerSastram ),
+      // get week
+      week = momentObjectAsPerSastram.format("dddd").toLowerCase(),
+      // get jamam
+      jamam = getJamam( momentObjectAsPerSastram ),
+      // get remaining jamam duration
+      remainingDuration = jamamDuration - DurationPassedByInJamam( momentObjectAsPerSastram ),
+      // get jamam start time
+      startTime = moment( m ).subtract( jamamDuration - remainingDuration, 'seconds');
+      // get jamam end time
+      endTime = moment( startTime ).add( jamamDuration, 'seconds');
+
+
+  if( jamam > 4 ) {
+    jamam = jamam - 5;
+  }
+
+  var sastram = cycle[paksham][dayOrNight];
+  var order = sastram.order;
+  var birds = {};
+  _.each( order, function( bird ) {
+    birds[bird] = {};
+    birds[bird]["sub"] = {};
+    birds[bird].activity = sastram.activity[week][bird][jamam];
+    birds[bird].friends = cycle[paksham].pakshi[bird].friend;
+    birds[bird].foes = cycle[paksham].pakshi[bird].foe;
+    birds[bird].birdStatus = (function() {
+        if( _.contains( cycle[paksham].pakshi[bird].rulez[dayOrNight], week ) ) {
+          return "rulez";
+        }
+        else if( _.contains( cycle[paksham].pakshi[bird].dies, week ) ) {
+          return "dies";
+        }
+        return "normal";
+      }());
+    birds[bird]["sub"].activityOrder = moveToFirst( sastram.activity[week][bird] , sastram.activity[week][bird][jamam] );
+    birds[bird]["sub"].pakshiOrder = moveToFirst( order , bird );
+    birds[bird]["sub"].activityDuration = _.map( birds[bird]["sub"].activityOrder, function( activityType ) {
+          return sastram.duration.sub[activityType]
+    } );
+  } );
+  return {
+    birds: birds,
+    startTime: startTime,
+    endTime: endTime
+  };
+}
+
+/*
+var obj = getSastram( moment( ) );
+console.log( obj )
+*/
+
+var disp = {};
+disp.activity = {
+    "r": "Ruling",
+    "e": "Eating",
+    "w": "Walking",
+    "s": "Sleeping",
+    "d": "Death"
+};
+disp.activityOrder =  [ "r", "e", "w", "s", "d" ];
+disp.delimiter = {
+  time: ":",
+  range: " - "
+};
+
+function view( p ) {
+  var temp,
+    instant,
+    subInstant,
+    bird;
+  for( var i=0,j=0;j<11;j++) {
+    instant = moment( ).set("hour", 0 ).set("minute", 0 ).set("second", i );
+    subInstant = null;
+    if( j === 0 ) {
+      console.log( p.toUpperCase() + " " + instant.format("DD:MM:YYYY dddd")  );
+      console.log("");
+    }
+    sastram = getSastram( instant );
+    bird = sastram.birds[p];
+    //console.log( sastram )
+    console.log( formatDuration(i, "hh:mm a") + " " + disp.activity[ bird.activity ] );
+    i = getDuration( sastram.endTime );
+    _.each( bird.sub.activityDuration, function( duration, index ) {
+      subInstant = moment( _.isObject( subInstant) ? subInstant : sastram.startTime ).add( duration, 'seconds' );
+      console.log( "- " + subInstant.format("hh:mm a") + " " + bird.sub.activityOrder[index] + " " + bird.sub.pakshiOrder[index] )
+    } );
+    if( j > 15) {
+     console.error("force break");
+     break;
+    }
+    console.log("");
+  }
+}
+
+view( "owl" );
+
+
+----------
+CALENDER
+
+DATE MONTH YEAR
+
+calender = function() {
+  return {
+    year: year,
+    month: month,
+    date: date
+  }
+}
+
+<div class="calender">
+<!-- calender begin -->
+  <div class="choosen-date">
+  <!-- choosen-date begin -->
+    <div class="grid-b">
+    <!-- grid-b begin -->
+      <div class="row">
+      <!-- row begin -->
+        <div class="block-a">
+          <span data-bind="text:date"></span>
+        </div>
+        <div class="block-b">
+          <span data-bind="text:month"></span>
+        </div>
+        <div class="block-c">
+          <span data-bind="text:year"></span>
+        </div>
+      <!-- row end -->
+      </div>
+    <!-- grid-b end -->
+    </div>
+  <!-- choosen-date end -->
+  </div>
+  <div class="menu">
+  <!-- menu begin -->
+    <div class="date-menu">
+    <!-- date-menu begin -->
+      <div class="grid-f">
+      <!-- grid-f begin -->
+        <div class="row">
+        <!-- row begin -->
+          <!-- ko foreach: weekOrder -->
+          <div class="block-z">
+            <span data-bind="text:$data"></span>
+          </div>
+          <!-- /ko -->
+        <!-- row end -->
+        </div>
+        <!-- ko foreach: dateWeek -->
+        <div class="row">
+        <!-- row begin -->
+          <!-- ko foreach: $data -->
+          <div class="block-z">
+            <span data-bind="text: $data"></span>
+          </div>
+          <!-- /ko -->
+        <!-- row end -->
+        </div>
+        <!-- /ko -->
+      <!-- grid-f end -->
+      </div>
+    <!-- date-menu end -->
+    </div>
+    <div class="month-menu">
+    <!-- month-menu begin -->
+    <!-- month-menu end -->
+    </div>
+    <div class="year-menu">
+    <!-- year-menu begin -->
+    <!-- year-menu end -->
+    </div>
+  <!-- menu end -->
+  </div>
+<!-- calender end -->
+</div>
+
+
+monthView = function() {
+  return [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november","dec" ];
+}
+yearView = function( selectedYear ) {
+  return [ selectedYear - 1, selectedYear , selectedYear + 1 ];
+}
+var dateView = function( forMonth, forYear, beginWeekFrom ) {
+  var forYear = forYear || moment().year();
+  var forMonth = forMonth || moment().format("MMMM").toLowerCase();
+  var weekOrder = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];
+  if( beginWeekFrom ) {
+    moveToFirst( weekOrder, beginWeekFrom);
+  }
+  var days = ( function() {
+    var febCount = forYear % 4 === 0 ? 29 : 28
+    return {
+      "january": 31,
+      "february": febCount,
+      "march": 31,
+      "april": 30,
+      "may": 31,
+      "june": 30,
+      "july": 31,
+      "august": 31,
+      "september": 30,
+      "october": 31,
+      "november": 30,
+      "december": 31
+    }
+  }() );
+  var monthBeginsOnWeek = moment().set( 'month', forMonth ).set( 'date', 1 ).set( 'year', forYear).format("dddd").toLowerCase();
+  var monthsEndsOnDate = days[forMonth];
+  console.log( "monthBeginsOnWeek : " + monthBeginsOnWeek );
+  console.log( "monthsEndsOnDate : " + monthsEndsOnDate );
+  var dateList = [];
+  var weekList = [];
+  for( var i=1; i< monthsEndsOnDate; i++ ) {
+    /* begin outer loop */
+    // clear weeklist for each loop
+    weekList = [];
+    for( var j=0;j<7;j++) {
+    /* begin inner loop */
+      if( i === 1 ){
+        if( monthBeginsOnWeek === weekOrder[j] ) {
+          weekList.push( i );
+          i = ( j !== 6 ) ? (i + 1) : i;
+        }
+        else {
+          weekList.push( "" );
+        }
+      }
+      else {
+        weekList.push( i );
+        i = ( j !== 6 ) ? (i + 1) : i;
+        if( i > monthsEndsOnDate ) {
+          // following for loop needed to ensure consistency of array values
+          for( var tempj = j+1; tempj<7; tempj++ ) {
+            weekList.push( "" );
+          }
+          break;
+        }
+      }
+    /* end inner loop */
+    }
+    dateList.push( weekList );
+  /* end outer loop */
+  }
+  return dateList;
+}

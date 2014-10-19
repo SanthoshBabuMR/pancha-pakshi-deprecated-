@@ -1,0 +1,56 @@
+Order of Activities ( from hightest to lowest )
+------------------------------------------------
+Ruling
+Eating
+Walking
+Sleeping
+Dying
+
+One Jamam
+---------
+144 minutes = 02Hrs 24Mins
+
+12 hrs = 5 Jamam
+24 hrs = 10 Jamam
+
+Each pakshi, will do any of the mentioned activities for 144 minutes i.e for 02hrs 24mins.
+No two bird will do the same activity at the same time and the activity is called "Main Activity", when they do it for one continuous jamam i.e. 144 minutes
+
+For every activity in progress, there will be 5 "Sub Activities" performed by the birds.
+Once again, now two bird within the sub-activity phase, will do the same "sub-activity"
+
+Generally favourable period
+---------------------------
+Ruling ( Main Activity )
+
+4 favourable & favourable periods
+---------------------------------
+Ruling ( sub activity ) in Ruling ( main activity )
+Eating ( sub activity ) in Ruling ( main activity )
+
+Ruling ( sub activity ) in Eating ( main activity )
+Eating ( sub activity ) in Eating ( main activity )
+
+Most Effective & Favourable period
+----------------------------------
+Ruling ( sub activity ) in Ruling ( main activity )
+
+Active / In active for the entire day
+-------------------------------------
+For any given day, only one specific bird may/may not be "Active" for the entire day.
+
+Likewise, for any given day, only one specific bird may/may not be "In Active" for the entire day
+In this case, we may look at the bird's friends
+
+Friends / Foes
+--------------
+When a bird is not 'Ruling' or 'Eating', that period will be unfavourable.
+In such cases, we need to look at the bird's friends, who are currently doing 'Ruling' or 'Eating' activity and consider those period.
+However, the bird's friends will have foes and they should be performing lesser potent activity than that of the them.
+Eg:
+Crow; Foes = cock, vulture
+
+Like wise, When a bird's enemies are stonger than our bird, then, our bird will be rendered in effective.
+Eg:
+Our Bird = Crow; Foes = Owl, Peacock
+If Owl is "Ruling" and Crow is "Eating", then Crow will be rendered in effective.

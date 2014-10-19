@@ -1,0 +1,310 @@
+{
+    "cycle": {
+        "shuklaPaksham": {
+            "pakshi": {
+                "vulture": {
+                    "friend": [ "crow", "cock" ],
+                    "foe": [ "peacock", "owl" ],
+                    "rulez": {
+                        "day": [ "sunday", "tuesday" ],
+                        "night": [ "friday" ]
+                    },
+                    "dies": [ "thursday", "saturday" ]
+                },
+                "owl": {
+                    "friend": [ "vulture", "crow" ],
+                    "foe": [ "peacock", "cock" ],
+                    "rulez": {
+                        "day": [ "monday", "wednesday" ],
+                        "night": [ "saturday" ]
+                    },
+                    "dies": [ "sunday", "friday" ]
+                },
+                "crow": {
+                    "friend": [ "vulture", "crow" ],
+                    "foe": [ "peacock", "cock" ],
+                    "rulez": {
+                        "day": [ "thursday" ],
+                        "night": [ "sunday", "tuesday" ]
+                    },
+                    "dies": [ "monday" ]
+                },
+                "cock": {
+                    "friend": [ "peacock", "crow" ],
+                    "foe": [ "vulture", "owl" ],
+                    "rulez": {
+                        "day": [ "friday" ],
+                        "night": [ "monday", "wednesday" ]
+                    },
+                    "dies": [ "tuesday" ]
+                },
+                "peacock": {
+                    "friend": [ "vulture", "cock" ],
+                    "foe": [ "owl", "crow" ],
+                    "rulez": {
+                        "day": [ "saturday" ],
+                        "night": [ "thursday" ]
+                    },
+                    "dies": [ "wednesday" ]
+                }
+            },
+            "day":{
+                "order": [ "vulture", "owl", "crow", "cock", "peacock" ],
+                "duration": {
+                    "main": {
+                        "e": 8640,
+                        "w": 8640,
+                        "r": 8640,
+                        "s": 8640,
+                        "d": 8640
+                    },
+                    "sub": {
+                        "e": 1800,
+                        "w": 2160,
+                        "r": 2880,
+                        "s": 1080,
+                        "d": 720
+                    }
+                },
+                "activity": {
+                    "sunday": {
+                        "vulture": [ "e", "w", "r", "s", "d" ],
+                        "owl": [ "w", "r", "s", "d", "e" ],
+                        "crow": [ "r", "s", "d", "e", "w" ],
+                        "cock": [ "s", "d", "e", "w", "r" ],
+                        "peacock": [ "d", "e", "w", "r", "s" ]
+                    },
+                    "monday": {
+                        "vulture": [ "d", "e", "w", "r", "s" ],
+                        "owl": [ "e", "w", "r", "s", "d" ],
+                        "crow": [ "w", "r", "s", "d", "e" ],
+                        "cock": [ "r", "s", "d", "e", "w" ],
+                        "peacock": [ "s", "d", "e", "w", "r" ]
+                    },
+                    "tuesday": {
+                        "vulture": [ "e", "w", "r", "s", "d" ],
+                        "owl": [ "w", "r", "s", "d", "e" ],
+                        "crow": [ "r", "s", "d", "e", "w" ],
+                        "cock": [ "s", "d", "e", "w", "r" ],
+                        "peacock": [ "d", "e", "w", "r", "s" ]
+                    },
+                    "wednesday": {
+                        "vulture": [ "d", "e", "w", "r", "s" ],
+                        "owl": [ "e", "w", "r", "s", "d" ],
+                        "crow": [ "w", "r", "s", "d", "e" ],
+                        "cock": [ "r", "s", "d", "e", "w" ],
+                        "peacock": [ "s", "d", "e", "w", "r" ]
+                    },
+                    "thursday": {
+                        "vulture": [ "s", "d", "e", "w", "r" ],
+                        "owl": [ "d", "e", "w", "r", "s" ],
+                        "crow": [ "e", "w", "r", "s", "d" ],
+                        "cock": [ "w", "r", "s", "d", "e" ],
+                        "peacock": [ "r", "s", "d", "e", "w" ]
+                    },
+                    "friday": {
+                        "vulture": [ "r", "s", "d", "e", "w" ],
+                        "owl": [ "s", "d", "e", "w", "r" ],
+                        "crow": [ "d", "e", "w", "r", "s" ],
+                        "cock": [ "e", "w", "r", "s", "d" ],
+                        "peacock": [ "w", "r", "s", "d", "e" ]
+                    },
+                    "saturday": {
+                        "vulture": [ "w", "r", "s", "d", "e" ],
+                        "owl": [ "r", "s", "d", "e", "w" ],
+                        "crow": [ "s", "d", "e", "w", "r" ],
+                        "cock": [ "d", "e", "w", "r", "s" ],
+                        "peacock": [ "e", "w", "r", "s", "d" ]
+                    }
+                }
+            },
+            "night": {
+                "order": [ "vulture", "peacock", "crow", "cock", "owl" ],
+                "duration": {
+                    "main": {
+                        "e": 8640,
+                        "r": 8640,
+                        "d": 8640,
+                        "w": 8640,
+                        "s": 8640
+                    },
+                    "sub": {
+                        "e": 1800,
+                        "r": 1440,
+                        "d": 2160,
+                        "w": 1800,
+                        "s": 1440
+                    }
+                },
+                "activity": {
+                    "sunday": {
+                        "vulture": [ "d", "w", "s", "e", "r" ],
+                        "owl": [ "r", "d", "w", "s", "e" ],
+                        "crow": [ "e", "r", "d", "w", "s" ],
+                        "cock": [ "s", "e", "r", "d", "w" ],
+                        "peacock": [ "w", "s", "e", "r", "d" ]
+                    },
+                    "monday": {
+                        "vulture": [ "w", "s", "e", "r", "d" ],
+                        "owl": [ "d", "w", "s", "e", "r" ],
+                        "crow": [ "r", "d", "w", "s", "e" ],
+                        "cock": [ "e", "r", "d", "w", "s" ],
+                        "peacock": [ "s", "e", "r", "d", "w" ]
+                    },
+                    "tuesday": {
+                        "vulture": [ "d", "w", "s", "e", "r" ],
+                        "owl": [ "r", "d", "w", "s", "e" ],
+                        "crow": [ "e", "r", "d", "w", "s" ],
+                        "cock": [ "s", "e", "r", "d", "w" ],
+                        "peacock": [ "w", "s", "e", "r", "d" ]
+                    },
+                    "wednesday": {
+                        "vulture": [ "w", "s", "e", "r", "d" ],
+                        "owl": [ "d", "w", "s", "e", "r" ],
+                        "crow": [ "r", "d", "w", "s", "e" ],
+                        "cock": [ "e", "r", "d", "w", "s" ],
+                        "peacock": [ "s", "e", "r", "d", "w" ]
+                    },
+                    "thursday": {
+                        "vulture": [ "s", "e", "r", "d", "w" ],
+                        "owl": [ "w", "s", "e", "r", "d" ],
+                        "crow": [ "d", "w", "s", "e", "r" ],
+                        "cock": [ "r", "d", "w", "s", "e" ],
+                        "peacock": [ "e", "r", "d", "w", "s" ]
+                    },
+                    "friday": {
+                        "vulture": [ "e", "r", "d", "w", "s" ],
+                        "owl": [ "s", "e", "r", "d", "w" ],
+                        "crow": [ "w", "s", "e", "r", "d" ],
+                        "cock": [ "d", "w", "s", "e", "r" ],
+                        "peacock": [ "r", "d", "w", "s", "e" ]
+                    },
+                    "saturday": {
+                        "vulture": [ "r", "d", "w", "s", "e" ],
+                        "owl": [ "e", "r", "d", "w", "s" ],
+                        "crow": [ "s", "e", "r", "d", "w" ],
+                        "cock": [ "w", "s", "e", "r", "d" ],
+                        "peacock": [ "d", "w", "s", "e", "r" ]
+                    }
+                }
+            }
+        },
+        "krishnaPaksham":{
+            "pakshi": {
+                "vulture": {
+                    "friend": [ "crow", "peacock" ],
+                    "foe": [ "cock", "owl" ],
+                    "rulez": {
+                        "day": [ "friday" ],
+                        "night": [ "sunday", "tuesday" ]
+                    },
+                    "dies": [ "tuesday" ]
+                },
+                "owl": {
+                    "friend": [ "crow", "cock" ],
+                    "foe": [ "vulture", "peacock" ],
+                    "rulez": {
+                        "day": [ "thursday" ],
+                        "night": [ "wednesday" ]
+                    },
+                    "dies": [ "monday" ]
+                },
+                "crow": {
+                    "friend": [ "owl", "vulture" ],
+                    "foe": [ "peacock", "cock" ],
+                    "rulez": {
+                        "day": [ "wednesday" ],
+                        "night": [ "thursday" ]
+                    },
+                    "dies": [ "sunday" ]
+                },
+                "cock": {
+                    "friend": [ "peacock", "owl" ],
+                    "foe": [ "crow", "vulture" ],
+                    "rulez": {
+                        "day": [ "sunday", "tuesday" ],
+                        "night": [ "monday", "saturday" ]
+                    },
+                    "dies": [ "thursday", "saturday" ]
+                },
+                "peacock": {
+                    "friend": [ "vulture", "cock" ],
+                    "foe": [ "owl", "crow" ],
+                    "rulez": {
+                        "day": [ "monday", "saturday" ],
+                        "night": [ "friend" ]
+                    },
+                    "dies": [ "wednesday", "friday" ]
+                }
+            },
+            "day":{
+                "activity": {
+                    "duration": {
+                        "e": 48,
+                        "d": 30,
+                        "s": 12,
+                        "w": 36,
+                        "r": 18
+                    },
+                    "order": {
+                        "sunday": {
+
+                        },
+                        "monday": {
+
+                        },
+                        "tuesday": {
+
+                        },
+                        "wednesday": {
+
+                        },
+                        "thursday": {
+
+                        },
+                        "friday": {
+
+                        },
+                        "saturday": {
+
+                        }
+                    }
+                }
+            },
+            "night": {
+                "activity": {
+                    "duration": {
+                        "e": 42,
+                        "s": 18,
+                        "w": 42,
+                        "d": 24,
+                        "r": 18
+                    },
+                    "order": {
+                        "sunday": {
+
+                        },
+                        "monday": {
+
+                        },
+                        "tuesday": {
+
+                        },
+                        "wednesday": {
+
+                        },
+                        "thursday": {
+
+                        },
+                        "friday": {
+
+                        },
+                        "saturday": {
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
